@@ -1597,7 +1597,7 @@ then use rubeus with s4u to relay the delegation
 
 ### PrivExchange attack
 
-Exchange your privileges for Domain Admin privs by abusing Exchange.  
+Exchange your privileges for Domain Admin privs by abusing Exchange.
 :warning: You need a shell on a user account with a mailbox.
 
 1. Exchange server hostname or IP address

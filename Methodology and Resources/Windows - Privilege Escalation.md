@@ -580,7 +580,7 @@ Alternatively you can use the Metasploit exploit :
 
 Note to check file permissions you can use `cacls` and `icacls`
 
-> icacls (Windows Vista +)  
+> icacls (Windows Vista +)
 > cacls (Windows XP)
 
 You are looking for `BUILTIN\Users:(F)`(Full access), `BUILTIN\Users:(M)`(Modify
@@ -777,7 +777,7 @@ List of exploits kernel :
 - [MS16-016](https://github.com/SecWiki/windows-kernel-exploits/tree/master/MS16-016)
   　[KB3136041][webdav]　　(2008/Vista/7)
 - [MS16-014](https://github.com/SecWiki/windows-kernel-exploits/tree/master/MS16-014)
-  　[K3134228][remote code execution]　　(2008/Vista/7)  
+  　[K3134228][remote code execution]　　(2008/Vista/7)
   ...
 - [MS03-026](./MS03-026)
   　[KB823980][buffer overrun in rpc interface]　　(/NT/2000/XP/2003)
@@ -1005,7 +1005,7 @@ Get-Process wininit | Invoke-TokenManipulation -CreateProcess "Powershell.exe -n
 
 ### Juicy Potato (abusing the golden privileges)
 
-Binary available at : https://github.com/ohpe/juicy-potato/releases  
+Binary available at : https://github.com/ohpe/juicy-potato/releases
 :warning: Juicy Potato doesn't work on Windows Server 2019 and Windows 10 1809
 +.
 

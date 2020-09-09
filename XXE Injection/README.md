@@ -5,11 +5,11 @@
 > XML parser to fetch specific content on the server.
 
 **Internal Entity**: If an entity is declared within a DTD it is called as
-internal entity.  
+internal entity.
 Syntax: `<!ENTITY entity_name "entity_value">`
 
 **External Entity**: If an entity is declared outside a DTD it is called as
-external entity. Identified by `SYSTEM`.  
+external entity. Identified by `SYSTEM`.
 Syntax: `<!ENTITY entity_name SYSTEM "entity_value">`
 
 ## Summary
