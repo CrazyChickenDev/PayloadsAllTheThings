@@ -2,15 +2,15 @@
 
 ## Summary
 
-* [CL.TE vulnerabilities](#cl.te-vulnerabilities)
-* [TE.CL vulnerabilities](#te.cl-vulnerabilities)
-* [TE.TE behavior: obfuscating the TE header](#te.te-behavior-obfuscating-the-te-header)
-* [References](#references)
-
+- [CL.TE vulnerabilities](#cl.te-vulnerabilities)
+- [TE.CL vulnerabilities](#te.cl-vulnerabilities)
+- [TE.TE behavior: obfuscating the TE header](#te.te-behavior-obfuscating-the-te-header)
+- [References](#references)
 
 ## CL.TE vulnerabilities
 
-> The front-end server uses the Content-Length header and the back-end server uses the Transfer-Encoding header.
+> The front-end server uses the Content-Length header and the back-end server
+> uses the Transfer-Encoding header.
 
 ```powershell
 POST / HTTP/1.1
@@ -38,11 +38,13 @@ Transfer-Encoding: chunked
 G
 ```
 
-Challenge: https://portswigger.net/web-security/request-smuggling/lab-basic-cl-te
+Challenge:
+https://portswigger.net/web-security/request-smuggling/lab-basic-cl-te
 
 ## TE.CL vulnerabilities
 
-> The front-end server uses the Transfer-Encoding header and the back-end server uses the Content-Length header. 
+> The front-end server uses the Transfer-Encoding header and the back-end server
+> uses the Content-Length header.
 
 ```powershell
 POST / HTTP/1.1
@@ -76,13 +78,19 @@ x=1
 
 ```
 
-:warning: To send this request using Burp Repeater, you will first need to go to the Repeater menu and ensure that the "Update Content-Length" option is unchecked.You need to include the trailing sequence \r\n\r\n following the final 0.
+:warning: To send this request using Burp Repeater, you will first need to go to
+the Repeater menu and ensure that the "Update Content-Length" option is
+unchecked.You need to include the trailing sequence \r\n\r\n following the
+final 0.
 
-Challenge: https://portswigger.net/web-security/request-smuggling/lab-basic-te-cl
+Challenge:
+https://portswigger.net/web-security/request-smuggling/lab-basic-te-cl
 
 ## TE.TE behavior: obfuscating the TE header
 
-> The front-end and back-end servers both support the Transfer-Encoding header, but one of the servers can be induced not to process it by obfuscating the header in some way.
+> The front-end and back-end servers both support the Transfer-Encoding header,
+> but one of the servers can be induced not to process it by obfuscating the
+> header in some way.
 
 ```powershell
 Transfer-Encoding: xchunked
@@ -96,8 +104,9 @@ Transfer-Encoding
 : chunked
 ```
 
-Challenge: https://portswigger.net/web-security/request-smuggling/lab-ofuscating-te-header
+Challenge:
+https://portswigger.net/web-security/request-smuggling/lab-ofuscating-te-header
 
 ## References
 
-* [PortSwigger - Request Smuggling](https://portswigger.net/web-security/request-smuggling)
+- [PortSwigger - Request Smuggling](https://portswigger.net/web-security/request-smuggling)

